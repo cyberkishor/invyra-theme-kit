@@ -223,10 +223,66 @@ body { margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; back
 @endsection`;
   fs.writeFileSync(path.join(targetDir, 'index.blade.php'), index);
 
+  // 6. Auth Views
+  const authDir = path.join(targetDir, 'auth');
+  fs.mkdirSync(authDir, { recursive: true });
+  fs.writeFileSync(path.join(authDir, 'login.blade.php'), `@extends(store_theme_layout())
+@section('title', 'Sign In — ' . (\$s->store_name ?? '${name}'))
+@section('content')
+<div style="max-width: 440px; margin: 60px auto; padding: 32px; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+  <h2 style="margin-top: 0; font-weight: 800; font-size: 1.6rem;">Sign In</h2>
+  <form method="POST" action="{{ route('store.login') }}">
+    @csrf
+    <input type="hidden" name="redirect" value="{{ \$redirect ?? route('checkout') }}">
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 6px;">Email Address</label>
+      <input type="email" name="email" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 6px;">Password</label>
+      <input type="password" name="password" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <button type="submit" style="width: 100%; padding: 12px; background: var(--th-primary, #6c5ce7); color: #fff; font-weight: 700; border: none; border-radius: 8px; cursor: pointer;">Sign In</button>
+  </form>
+</div>
+@endsection`);
+
+  fs.writeFileSync(path.join(authDir, 'register.blade.php'), `@extends(store_theme_layout())
+@section('title', 'Create Account — ' . (\$s->store_name ?? '${name}'))
+@section('content')
+<div style="max-width: 480px; margin: 60px auto; padding: 32px; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+  <h2 style="margin-top: 0; font-weight: 800; font-size: 1.6rem;">Create Account</h2>
+  <form method="POST" action="{{ route('store.register') }}">
+    @csrf
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px;">Full Name</label>
+      <input type="text" name="name" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px;">Email</label>
+      <input type="email" name="email" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px;">Phone</label>
+      <input type="tel" name="phone" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px;">Password</label>
+      <input type="password" name="password" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px;">Confirm Password</label>
+      <input type="password" name="password_confirmation" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <button type="submit" style="width: 100%; padding: 12px; background: var(--th-primary, #6c5ce7); color: #fff; font-weight: 700; border: none; border-radius: 8px; cursor: pointer;">Register</button>
+  </form>
+</div>
+@endsection`);
+
   return {
     content: [{
       type: 'text',
-      text: `✅ Theme '${name}' [${slug}] scaffolded successfully!\nPath: ${targetDir}\nFiles created: theme.json, preview.svg, style.css, layout.blade.php, index.blade.php`
+      text: `✅ Theme '${name}' [${slug}] scaffolded successfully!\nPath: ${targetDir}\nFiles created: theme.json, preview.svg, style.css, layout.blade.php, index.blade.php, auth/login.blade.php, auth/register.blade.php`
     }]
   };
 }

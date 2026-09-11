@@ -119,6 +119,76 @@ if (command === 'mcp') {
   </div>
 @endsection`);
 
+  // Auth Views
+  const authDir = path.join(targetDir, 'auth');
+  fs.mkdirSync(authDir, { recursive: true });
+  fs.writeFileSync(path.join(authDir, 'login.blade.php'), `@extends(store_theme_layout())
+@section('title', 'Sign In — ' . (\$s->store_name ?? '${name}'))
+@section('content')
+<div style="max-width: 440px; margin: 60px auto; padding: 32px; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+  <h2 style="margin-top: 0; font-weight: 800; font-size: 1.6rem;">Sign In</h2>
+  <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 24px;">Access your orders, wishlist, and profile.</p>
+  <form method="POST" action="{{ route('store.login') }}">
+    @csrf
+    <input type="hidden" name="redirect" value="{{ \$redirect ?? route('checkout') }}">
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Email Address</label>
+      <input type="email" name="email" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 16px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Password</label>
+      <input type="password" name="password" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <button type="submit" style="width: 100%; padding: 12px; background: var(--th-primary, #6c5ce7); color: #fff; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">Sign In</button>
+  </form>
+  <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #64748b;">
+    Don't have an account? <a href="{{ route('store.register.show') }}" style="color: var(--th-primary, #6c5ce7); font-weight: 600;">Create one</a>
+  </div>
+</div>
+@endsection`);
+
+  fs.writeFileSync(path.join(authDir, 'register.blade.php'), `@extends(store_theme_layout())
+@section('title', 'Create Account — ' . (\$s->store_name ?? '${name}'))
+@section('content')
+<div style="max-width: 480px; margin: 60px auto; padding: 32px; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+  <h2 style="margin-top: 0; font-weight: 800; font-size: 1.6rem;">Create Account</h2>
+  <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 24px;">Join for seamless ordering and tracking.</p>
+  <form method="POST" action="{{ route('store.register') }}">
+    @csrf
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.88rem;">Full Name</label>
+      <input type="text" name="name" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.88rem;">Email</label>
+      <input type="email" name="email" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.88rem;">Phone Number</label>
+      <input type="tel" name="phone" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="margin-bottom: 14px;">
+      <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.88rem;">Delivery Address</label>
+      <input type="text" name="address" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+      <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.88rem;">Password</label>
+        <input type="password" name="password" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+      </div>
+      <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.88rem;">Confirm</label>
+        <input type="password" name="password_confirmation" required style="width: 100%; box-sizing: border-box; padding: 10px 14px; border: 1.5px solid #e2e8f0; border-radius: 8px;">
+      </div>
+    </div>
+    <button type="submit" style="width: 100%; padding: 12px; background: var(--th-primary, #6c5ce7); color: #fff; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">Register Now</button>
+  </form>
+  <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #64748b;">
+    Already have an account? <a href="{{ route('store.login.show') }}" style="color: var(--th-primary, #6c5ce7); font-weight: 600;">Sign In</a>
+  </div>
+</div>
+@endsection`);
+
   console.log(`✅ Theme '${name}' [${slug}] created at:\n   ${targetDir}`);
 } else if (command === 'validate') {
   const targetPath = path.resolve(args[1] || '.');

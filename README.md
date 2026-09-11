@@ -114,10 +114,13 @@ my_theme_slug/
 ├── contact.blade.php        # Store hours & inquiry form
 ├── preview.svg              # 400x260 vector thumbnail card
 ├── style.css                # Scoped CSS with custom properties
-└── assets/                  # Public static assets (images, SVGs, client JS, fonts)
-    ├── theme.js             # Optional client-side script
-    ├── logo.svg             # Brand logo & SVG icons
-    └── images/              # Banners & graphic badges
+├── assets/                  # Public static assets (images, SVGs, client JS, fonts)
+│   ├── theme.js             # Optional client-side script
+│   ├── logo.svg             # Brand logo & SVG icons
+│   └── images/              # Banners & graphic badges
+└── auth/                    # Customer authentication screens
+    ├── login.blade.php      # Storefront login page
+    └── register.blade.php   # Storefront registration page
 ```
 
 When a theme is uploaded or installed, everything inside `assets/` and root `style.css` is automatically published to `public/store_themes/{slug}/`.
