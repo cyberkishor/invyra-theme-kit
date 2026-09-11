@@ -1,0 +1,25 @@
+{
+  "name": "invyra-theme-kit",
+  "version": "1.0.0",
+  "description": "Developer Kit, Antigravity Skill, and Model Context Protocol (MCP) Server for building, auditing, packaging, and testing Invyra SaaS Storefront Themes.",
+  "main": "server.js",
+  "bin": {
+    "invyra-theme": "./bin/invyra-theme.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node bin/invyra-theme.js --help"
+  },
+  "keywords": [
+    "invyra",
+    "themes",
+    "storefront",
+    "mcp",
+    "antigravity",
+    "laravel",
+    "ecommerce",
+    "ai-agent"
+  ],
+  "author": "Invyra",
+  "license": "MIT"
+}
