@@ -63,6 +63,8 @@ if (command === 'mcp') {
   }
 
   fs.mkdirSync(targetDir, { recursive: true });
+  fs.mkdirSync(path.join(targetDir, 'assets'), { recursive: true });
+  fs.writeFileSync(path.join(targetDir, 'assets', 'theme.js'), `// ${name} Theme Client Scripts\nconsole.log('${name} theme loaded.');\n`);
 
   // Manifest
   const manifest = {

@@ -113,17 +113,30 @@ my_theme_slug/
 ├── order-show.blade.php     # Detailed order invoice view
 ├── contact.blade.php        # Store hours & inquiry form
 ├── preview.svg              # 400x260 vector thumbnail card
-└── style.css                # Scoped CSS with custom properties
+├── style.css                # Scoped CSS with custom properties
+└── assets/                  # Public static assets (images, SVGs, client JS, fonts)
+    ├── theme.js             # Optional client-side script
+    ├── logo.svg             # Brand logo & SVG icons
+    └── images/              # Banners & graphic badges
 ```
+
+When a theme is uploaded or installed, everything inside `assets/` and root `style.css` is automatically published to `public/store_themes/{slug}/`.
 
 ---
 
 ## Theme Authoring Rules
 
 1. **Asset Loading**:
-   Always load theme stylesheets and assets using `store_theme_asset`:
+   Always load theme stylesheets, JavaScript, and images using `store_theme_asset`:
    ```blade
+   {{-- Root stylesheet --}}
    <link rel="stylesheet" href="{{ store_theme_asset('style.css', '{slug}') }}?v={{ time() }}">
+
+   {{-- Custom script from assets/ folder --}}
+   <script src="{{ store_theme_asset('theme.js', '{slug}') }}"></script>
+
+   {{-- Custom image/SVG from assets/ folder --}}
+   <img src="{{ store_theme_asset('logo.svg', '{slug}') }}" alt="Brand Logo">
    ```
 2. **Canonical Named Routes**:
    - Product detail: `route('store.product.show', $product->slug ?? $product->id)`

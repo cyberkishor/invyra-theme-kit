@@ -93,6 +93,8 @@ function handleCreateTheme(args) {
   }
 
   fs.mkdirSync(targetDir, { recursive: true });
+  fs.mkdirSync(path.join(targetDir, 'assets'), { recursive: true });
+  fs.writeFileSync(path.join(targetDir, 'assets', 'theme.js'), `// ${name} Client Scripts\nconsole.log('${name} theme loaded.');\n`);
 
   // 1. theme.json
   const manifest = {
