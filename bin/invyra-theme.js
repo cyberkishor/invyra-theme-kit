@@ -158,8 +158,9 @@ if (command === 'mcp') {
   const storeUrl = urlArg.split('=')[1].replace(/\/$/, '');
   const token = tokenArg ? tokenArg.split('=')[1] : '';
   const authHeader = token ? `-H "Authorization: Bearer ${token}"` : '';
-  const cmd = `curl -k -s -X POST -F "theme=@${zipFile}" ${authHeader} "${storeUrl}/api/store/themes/upload"`;
-  console.log(`Uploading ${zipFile} to ${storeUrl}...`);
+  const endpoint = `${storeUrl}/api/admin/store/themes/upload`;
+  const cmd = `curl -k -s -X POST -F "theme=@${zipFile}" ${authHeader} -H "Accept: application/json" "${endpoint}"`;
+  console.log(`Uploading ${zipFile} to ${endpoint}...`);
   const out = execSync(cmd).toString();
   console.log(out);
 } else {

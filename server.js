@@ -337,11 +337,11 @@ function handleUploadTheme(args) {
   }
 
   const storeUrl = args.store_url.replace(/\/$/, '');
-  const uploadEndpoint = `${storeUrl}/api/store/themes/upload`;
+  const uploadEndpoint = `${storeUrl}/api/admin/store/themes/upload`;
 
   try {
     const authHeader = args.token ? `-H "Authorization: Bearer ${args.token}"` : '';
-    const cmd = `curl -k -s -X POST -F "theme=@${zipPath}" ${authHeader} "${uploadEndpoint}"`;
+    const cmd = `curl -k -s -X POST -F "theme=@${zipPath}" ${authHeader} -H "Accept: application/json" "${uploadEndpoint}"`;
     const response = execSync(cmd, { stdio: 'pipe' }).toString();
 
     let json;
